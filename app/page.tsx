@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import PocketBase from 'pocketbase'
+import PocketBase, { ListResult } from 'pocketbase'
 import Link from "next/link";
 import { Post } from './components/uiComponents/Post';
 import { Header } from './components/uiComponents/Header';
 import { Grid } from './components/Layout';
+import { PostModel } from '@/types';
 
 export const dynamic = 'auto',
   dynamicParams = 'true',
@@ -12,25 +13,29 @@ export const dynamic = 'auto',
   runtime = 'nodejs',
   preferredRegion = 'auto'
 
-async function getPosts() {
+/**
+ * Retrieve a list result of PostModels.
+ * @returns A list result of PostModels, containing excessive paging information.
+ */
+async function getPosts(): Promise<ListResult<PostModel>> {
   const pb = new PocketBase('http://127.0.0.1:8090');
-  const posts = await pb.collection('posts').getList(1, 50);
-  return posts?.items as any[];
+  const postListResult = await pb.collection<PostModel>('posts').getList(1, 50);
+  return postListResult;
 }
 
-
 export default async function Home() {
-  const posts = await getPosts();
+  const postLR = await getPosts();
   return (
     <main className="flex min-h-screen flex-col items-center">
-      <Header title={''}>
+      <Header title={'Posts'}>
         Something Else
       </Header>
       <Grid>
-        {posts?.map((post) => (
-          <Post postObj={post}></Post>
+        {postLR?.items.map((postModel) => (
+          <Post postModel={postModel}></Post>
         ))}
       </Grid>
+
     </main>
   )
 }
