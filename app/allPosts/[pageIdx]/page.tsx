@@ -17,7 +17,7 @@ export const dynamic = 'auto',
     preferredRegion = 'auto'
 
 const postsConfig = {
-    numPerPage: 2,
+    numPerPage: 10,
 }
 
 /**
@@ -52,9 +52,7 @@ export default async function Home({ params }: any) {
             </Grid>
 
             {/* Page Selector */}
-            <PageSelectorList destination={'allPosts'} numOfPage={5} />
-
-
+            <PageSelectorList destination={'allPosts'} numOfPage={3} />
         </Main>
     )
 }
