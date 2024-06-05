@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'themeColorUltraLight': '200',
+        'themeColorUltraLight': '#ceddef',
         'themeColorLight': '#b9cfe8',
         'themeColorModerate': '#6a7fc1',
         'themeColor': '#4a5989',
