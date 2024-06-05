@@ -5,6 +5,9 @@ import { Post } from './components/uiComponents/Post';
 import { Header } from './components/uiComponents/Header';
 import { Grid } from './components/Layout';
 import { PostModel } from '@/types';
+import { u_p_server } from '@/utils/u_paths';
+import { UList, NavUList } from './components/Lists';
+import { Main } from './components/Frames';
 
 export const dynamic = 'auto',
   dynamicParams = 'true',
@@ -18,7 +21,8 @@ export const dynamic = 'auto',
  * @returns A list result of PostModels, containing excessive paging information.
  */
 async function getPosts(): Promise<ListResult<PostModel>> {
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  const url = u_p_server.BASE_URL;
+  const pb = new PocketBase(u_p_server.BASE_URL);
   const postListResult = await pb.collection<PostModel>('posts').getList(1, 50);
   return postListResult;
 }
@@ -26,16 +30,21 @@ async function getPosts(): Promise<ListResult<PostModel>> {
 export default async function Home() {
   const postLR = await getPosts();
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <Main title="BBS">
+      {/* Header */}
       <Header title={'Posts'}>
-        Something Else
+        <NavUList>
+          <Link href={'https://www.google.com'}> About Us</Link>
+          <Link href={'https://www.google.com'}> Me</Link>
+        </NavUList>
       </Header>
+
       <Grid>
         {postLR?.items.map((postModel) => (
           <Post postModel={postModel}></Post>
         ))}
       </Grid>
 
-    </main>
+    </Main>
   )
 }
