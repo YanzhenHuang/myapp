@@ -5,9 +5,9 @@ import { Header } from '@/components/uiComponents/Header';
 import { Grid } from '@/components/Layout';
 import { PostModel } from '@/types';
 import { u_p_server } from '@/utils/u_paths';
-import { UList, NavUList } from '@/components/Lists';
+import { NavUList } from '@/components/Lists';
 import { Main } from '@/components/Frames';
-import { PageSelector, PageSelectorList } from '@/components/uiComponents/PageSelector';
+import { PageSelectorList } from '@/components/uiComponents/PageSelector';
 
 export const dynamic = 'auto',
     dynamicParams = 'true',
@@ -26,7 +26,7 @@ const postsConfig = {
  */
 async function getPosts(startIdx: number): Promise<ListResult<PostModel>> {
     const pb = new PocketBase(u_p_server.BASE_URL);
-    const postListResult = await pb.collection<PostModel>('posts').getList(startIdx, postsConfig.numPerPage);
+    const postListResult = await pb.collection<PostModel>('posts').getList(startIdx, postsConfig.numPerPage, { sort: '-updated' });
     return postListResult;
 }
 
@@ -52,7 +52,7 @@ export default async function Home({ params }: any) {
             </Grid>
 
             {/* Page Selector */}
-            <PageSelectorList destination={'allPosts'} numOfPage={3} />
+            <PageSelectorList destination={'allPosts'} numOfPage={postLR.totalPages} />
         </Main>
     )
 }
