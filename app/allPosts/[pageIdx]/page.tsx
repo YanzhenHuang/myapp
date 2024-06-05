@@ -5,8 +5,9 @@ import { Header } from '@/components/uiComponents/Header';
 import { Grid } from '@/components/Layout';
 import { PostModel } from '@/types';
 import { u_p_server } from '@/utils/u_paths';
-import { NavUList } from '@/components/Lists';
+import { UList, NavUList } from '@/components/Lists';
 import { Main } from '@/components/Frames';
+import { PageSelector, PageSelectorList } from '@/components/uiComponents/PageSelector';
 
 export const dynamic = 'auto',
     dynamicParams = 'true',
@@ -20,19 +21,6 @@ const postsConfig = {
 }
 
 /**
- * Retrieve the current page.
- * @param params 
- * @returns 
- */
-async function getServerideParams(params: any) {
-    const { startIdx } = params.startIdx;
-    if (!startIdx) {
-        return 1;
-    }
-    return startIdx;
-}
-
-/**
  * Retrieve a list result of PostModels.
  * @returns A list result of PostModels, containing excessive paging information.
  */
@@ -43,14 +31,14 @@ async function getPosts(startIdx: number): Promise<ListResult<PostModel>> {
 }
 
 export default async function Home({ params }: any) {
-    let startIdx = params.startIdx;
+    let startIdx = params.pageIdx;
     let postLR = await getPosts(startIdx);
 
     return (
         <Main title="BBS">
             {/* Header */}
             <Header title={'Posts'}>
-                <NavUList>
+                <NavUList gap={5}>
                     <Link href={'https://www.google.com'}> About Us</Link>
                     <Link href={'https://www.google.com'}> Me</Link>
                 </NavUList>
@@ -63,9 +51,10 @@ export default async function Home({ params }: any) {
                 ))}
             </Grid>
 
-            <Link href={`/allPosts/${2}`}>
-                2
-            </Link>
+            {/* Page Selector */}
+            <PageSelectorList destination={'allPosts'} numOfPage={5} />
+
+
         </Main>
     )
 }
