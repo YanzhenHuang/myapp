@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Header } from "@/app/components/uiComponents/Header";
+import { Header } from "@/components/uiComponents/Header";
 import Head from "next/head";
-import { Post } from "@/app/components/uiComponents/Post";
+import { Post } from "@/components/uiComponents/Post";
 
 async function getPost(postID: string) {
     const res = await fetch(`http://127.0.0.1:8090/api/collections/posts/records/${postID}`,
@@ -21,7 +21,7 @@ export default async function PostPage({ params }: any) {
             <div className="p-10">
                 <div className="mb-3">
                     <p className="font-bold text-3xl">
-                        <Link href="../" className="opacity-50">Posts</Link>
+                        <Link href="../" className="opacity-50">Posts /</Link>
                         {` ${post.id}`}
                     </p>
                 </div>
