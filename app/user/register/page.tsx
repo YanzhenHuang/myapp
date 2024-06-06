@@ -61,50 +61,52 @@ export default function Home() {
     }
 
     return (
-        <Main>
-            <form>
-                <div className="flex flex-col bg-white gap-5 p-32 items-center">
-                    {/* User Avatar Input*/}
-                    <AvatarInput setAvatar={setAvatar} />
+        <Main title={"Register"}>
 
-                    {/* Input Informations */}
-                    <FormInput
-                        placeholder="User Name"
-                        type="text"
-                        name="username"
-                        state={{ 'state': m_userName, 'setState': setUserName }}>
-                    </FormInput>
+            <div className="absolute top-32 flex flex-col bg-white gap-5 p-24 items-center rounded-xl hover:cursor-pointer hover:scale-[1.02] transition-all shadow-lg">
+                {/* User Avatar Input*/}
+                <AvatarInput setAvatar={setAvatar} />
 
-                    <FormInput
-                        placeholder="Email"
-                        type="email"
-                        name="email"
-                        state={{ 'state': m_email, 'setState': setEmail }}>
-                    </FormInput>
+                <br />
 
-                    <FormInput
-                        placeholder="Set Password"
-                        type="password"
-                        name="password"
-                        state={{ 'state': m_pwd, 'setState': setPwd }}>
-                    </FormInput>
+                {/* Input Informations */}
+                <FormInput
+                    placeholder="User Name"
+                    type="text"
+                    name="username"
+                    state={{ 'state': m_userName, 'setState': setUserName }}>
+                </FormInput>
 
-                    <FormInput
-                        placeholder="Confirm Password"
-                        type="password"
-                        name="passwordConfirm"
-                        state={{ 'state': m_confirmPwd, 'setState': setConfirmPwd }}>
-                    </FormInput>
+                <FormInput
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    state={{ 'state': m_email, 'setState': setEmail }}>
+                </FormInput>
 
-                    {/* Submit Button */}
-                    <button
-                        className="text-white bg-themeColor pt-2 pb-2 pl-5 pr-5 rounded-md hover:scale-[1.02] hover:opacity-80 transition-all"
-                        onClick={async (e) => { Register(e) }}>
-                        Submit
-                    </button>
+                <FormInput
+                    placeholder="Set Password"
+                    type="password"
+                    name="password"
+                    state={{ 'state': m_pwd, 'setState': setPwd }}>
+                </FormInput>
 
-                </div>
-            </form>
+                <FormInput
+                    placeholder="Confirm Password"
+                    type="password"
+                    name="passwordConfirm"
+                    state={{ 'state': m_confirmPwd, 'setState': setConfirmPwd }}>
+                </FormInput>
+
+                {/* Submit Button */}
+                <button
+                    className="text-white bg-themeColor pt-2 pb-2 pl-5 pr-5 mt-5 font-bold rounded-md hover:scale-[1.02] hover:opacity-80 transition-all"
+                    onClick={async (e) => { Register(e) }}>
+                    Submit
+                </button>
+
+            </div>
+
         </Main >
     );
 }

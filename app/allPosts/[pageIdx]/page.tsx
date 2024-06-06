@@ -40,7 +40,7 @@ export default async function Home({ params }: any) {
             <Header title={'Posts'}>
                 <NavUList gap={5}>
                     <Link href={'https://www.google.com'}> About Us</Link>
-                    <Link href={'https://www.google.com'}> Me</Link>
+                    <Link href={'/user/register/'}> Me</Link>
                 </NavUList>
             </Header>
 
