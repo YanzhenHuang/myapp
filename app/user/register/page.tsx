@@ -9,25 +9,6 @@ import { UserRegisterModel } from "@/types";
 
 const pb = new PocketBase(u_p_server.BASE_URL);
 
-const RegisterUser = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, json: UserRegisterModel) => {
-    e.preventDefault();
-    try {
-        const record = await pb.collection('users').create<UserRegisterModel>(json).then(() => {
-            window.location.href = "/allPosts/1"
-        });
-    } catch (e: any) {
-        let dataArr = Object.values(e.data.data) as ErrData[];
-        let dataArrKey = Object.keys(e.data.data);
-        let errMessages = e.message + "\n";
-
-        dataArr.map((data, index) => {
-            let indexNum = (index + 1).toString() + " ";
-            errMessages += indexNum + ". " + dataArrKey[index] + ": " + data.message + "\n";
-        });
-        alert(errMessages);
-    }
-};
-
 interface ErrData {
     code: string;
     message: string;
