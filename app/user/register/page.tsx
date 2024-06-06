@@ -12,7 +12,9 @@ const pb = new PocketBase(u_p_server.BASE_URL);
 const RegisterUser = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, json: UserRegisterModel) => {
     e.preventDefault();
     try {
-        const record = await pb.collection('users').create<UserRegisterModel>(json);
+        const record = await pb.collection('users').create<UserRegisterModel>(json).then(() => {
+            window.location.href = "/allPosts/1"
+        });
     } catch (e: any) {
         let dataArr = Object.values(e.data.data) as ErrData[];
         let dataArrKey = Object.keys(e.data.data);
@@ -47,6 +49,36 @@ export default function Home() {
     // Avatar
     const [m_avatar, setAvatar] = useState<Blob>();
 
+    const Register = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        // Summarize user upload data
+        let json = {
+            'username': m_userName,
+            'email': m_email,
+            'password': m_pwd,
+            'passwordConfirm': m_confirmPwd,
+            'avatar': m_avatar,
+        } as UserRegisterModel;
+
+        // Register User
+        try {
+            const record = await pb.collection('users').create<UserRegisterModel>(json).then(() => {
+                window.location.href = "/allPosts/1"
+            });
+        } catch (e: any) {
+            let dataArr = Object.values(e.data.data) as ErrData[];
+            let dataArrKey = Object.keys(e.data.data);
+            let errMessages = e.message + "\n";
+
+            dataArr.map((data, index) => {
+                let indexNum = (index + 1).toString() + " ";
+                errMessages += indexNum + ". " + dataArrKey[index] + ": " + data.message + "\n";
+            });
+            alert(errMessages);
+        }
+    }
+
     return (
         <Main>
             <form>
@@ -55,29 +87,41 @@ export default function Home() {
                     <AvatarInput setAvatar={setAvatar} />
 
                     {/* Input Informations */}
-                    <FormInput placeholder="User Name" type="text" name="username" state={{ 'state': m_userName, 'setState': setUserName }}></FormInput>
-                    <FormInput placeholder="Email" type="email" name="email" state={{ 'state': m_email, 'setState': setEmail }} ></FormInput>
-                    <FormInput placeholder="Set Password" type="password" name="password" state={{ 'state': m_pwd, 'setState': setPwd }}></FormInput>
-                    <FormInput placeholder="Confirm Password" type="password" name="passwordConfirm" state={{ 'state': m_confirmPwd, 'setState': setConfirmPwd }}></FormInput>
+                    <FormInput
+                        placeholder="User Name"
+                        type="text"
+                        name="username"
+                        state={{ 'state': m_userName, 'setState': setUserName }}>
+                    </FormInput>
 
+                    <FormInput
+                        placeholder="Email"
+                        type="email"
+                        name="email"
+                        state={{ 'state': m_email, 'setState': setEmail }}>
+                    </FormInput>
+
+                    <FormInput
+                        placeholder="Set Password"
+                        type="password"
+                        name="password"
+                        state={{ 'state': m_pwd, 'setState': setPwd }}>
+                    </FormInput>
+
+                    <FormInput
+                        placeholder="Confirm Password"
+                        type="password"
+                        name="passwordConfirm"
+                        state={{ 'state': m_confirmPwd, 'setState': setConfirmPwd }}>
+                    </FormInput>
+
+                    {/* Submit Button */}
                     <button
                         className="text-white bg-themeColor pt-2 pb-2 pl-5 pr-5 rounded-md hover:scale-[1.02] hover:opacity-80 transition-all"
-                        onClick={async (e) => {
-                            e.preventDefault();
+                        onClick={async (e) => { Register(e) }}>
+                        Submit
+                    </button>
 
-                            let json = {
-                                'username': m_userName,
-                                'email': m_email,
-                                'password': m_pwd,
-                                'passwordConfirm': m_confirmPwd,
-                                'avatar': m_avatar,
-                            } as UserRegisterModel;
-
-                            await RegisterUser(e, json).then(() => {
-                                window.location.href = "/allPosts/1"
-                            });
-
-                        }}>Submit</button>
                 </div>
             </form>
         </Main >
