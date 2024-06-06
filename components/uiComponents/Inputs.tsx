@@ -14,15 +14,25 @@ import { FaUser } from "@react-icons/all-files/fa/FaUser";
  */
 export const FormInput = (props: { placeholder: string, type?: string, name: string, state: ReactGetSetState<string> }) => {
     const inputStyles = "w-80 p-3 rounded-md border-2 border-gray focus:border-themeColor focus:outline-none";
+    const [labelColor, setLabelColor] = useState<"text-themeColor font-semibold" | "text-gray-400 font-medium">("text-gray-400 font-medium");
     return (
-        <input
-            placeholder={props.placeholder}
-            type={props.type}
-            name={props.name}
-            className={inputStyles}
-            onChange={(e) => {
-                props.state.setState(e.target.value);
-            }}></input>
+        <div>
+            <div className={`text-gray ${labelColor} text-sm pl-2 pb-0.5 `}>
+                <p>{props.placeholder}</p>
+            </div>
+            <input
+                placeholder={props.placeholder}
+                type={props.type}
+                name={props.name}
+                className={inputStyles}
+                onChange={(e) => {
+                    props.state.setState(e.target.value);
+                }}
+
+                onFocusCapture={() => { setLabelColor("text-themeColor font-semibold") }}
+                onBlur={(e) => { setLabelColor("text-gray-400 font-medium") }}
+            ></input>
+        </div>
     );
 }
 
