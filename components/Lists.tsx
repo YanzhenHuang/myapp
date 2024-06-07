@@ -21,7 +21,7 @@ type UListProps = {
  */
 export const UList = (props: UListProps) => {
 
-    const className = `flex ${props.flexDirection || "row"} gap-${props.gap || 3}` + " " + (props.l_className || "");
+    const className = `flex ${props.flexDirection || "row"} gap-${props.gap || 3} items-center` + " " + (props.l_className || "");
 
     if (!Array.isArray(props.children)) {
         return props.children;
