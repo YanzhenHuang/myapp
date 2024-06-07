@@ -36,3 +36,15 @@ export interface ReactGetSetState<T> {
     state: T;
     setState: (newState: T) => void;
 }
+
+
+export interface UserInfoModel {
+    id: string;
+    username: string;
+    verified: boolean;
+    email: string;
+    created: string;
+    updated: string;
+    name: string;
+    avatar: string;
+}
