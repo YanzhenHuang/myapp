@@ -14,10 +14,10 @@ import { FaUser } from "@react-icons/all-files/fa/FaUser";
  */
 export const FormInput = (props: { placeholder: string, type?: string, name: string, state: ReactGetSetState<string> }) => {
     const inputStyles = "w-80 p-3 rounded-md border-2 border-gray focus:border-themeColor focus:outline-none";
-    const [labelColor, setLabelColor] = useState<"text-themeColor font-semibold" | "text-gray-400 font-medium">("text-gray-400 font-medium");
+    const [labelColor, setLabelColor] = useState<"text-themeColor font-semibold scale-[1.02]" | "text-gray-400 font-medium">("text-gray-400 font-medium");
     return (
         <div>
-            <div className={`text-gray ${labelColor} text-sm pl-2 pb-0.5 `}>
+            <div className={`text-gray ${labelColor} text-sm pl-2 pb-0.5 transition-all `}>
                 <p>{props.placeholder}</p>
             </div>
             <input
@@ -29,7 +29,7 @@ export const FormInput = (props: { placeholder: string, type?: string, name: str
                     props.state.setState(e.target.value);
                 }}
 
-                onFocusCapture={() => { setLabelColor("text-themeColor font-semibold") }}
+                onFocusCapture={() => { setLabelColor("text-themeColor font-semibold scale-[1.02]") }}
                 onBlur={(e) => { setLabelColor("text-gray-400 font-medium") }}
             ></input>
         </div>
