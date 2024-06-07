@@ -63,6 +63,8 @@ export default function Home() {
                                 setCookie('PB_AUTH_ID', model?.id);
                                 setCookie('PB_AUTH_TOKEN', token);
 
+                                router.push('/allPosts/1');
+
                             });
                         } catch (err: any) {
                             let msg = `Erro: ${err.message}. \n Check your user name / email and password.`
