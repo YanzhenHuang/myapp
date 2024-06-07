@@ -45,7 +45,7 @@ export default function Home() {
         // Register User
         try {
             const record = await pb.collection('users').create<UserRegisterModel>(json).then(() => {
-                window.location.href = "/allPosts/1"
+                window.location.href = "/user/signin"
             });
         } catch (e: any) {
             let dataArr = Object.values(e.data.data) as ErrData[];
