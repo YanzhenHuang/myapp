@@ -1,24 +1,24 @@
 "use client"
 
 import { Main } from "@/components/Frames";
-import React, { useState } from "react";
-import PocketBase, { ClientResponseError, RecordAuthResponse, RecordModel } from 'pocketbase';
-import { u_p_server } from "@/utils/u_paths";
+import React, { useState, useEffect } from "react";
+import { RecordAuthResponse, RecordModel } from 'pocketbase';
 import { FormInput } from "@/components/uiComponents/Inputs";
 import { useRouter } from 'next/navigation';
-import { getCookie, setCookie, deleteCookie } from 'cookies-next'
+import { setCookie, deleteCookie } from 'cookies-next'
 import { pb } from '@/utils/u_pocketbase'
 
 // const pb = new PocketBase(u_p_server.BASE_URL);
 
-interface ErrData {
-    code: string;
-    message: string;
-}
-
 const Signin = async (identity: string, pwd: string): Promise<RecordAuthResponse<RecordModel>> => {
     const authData = await pb.collection('users').authWithPassword(identity, pwd);
     return authData;
+}
+
+const clearLoginData = () => {
+    pb.authStore.clear();
+    deleteCookie('PB_AUTH_ID');
+    deleteCookie('PB_AUTH_TOKEN');
 }
 
 export default function Home() {
@@ -27,6 +27,10 @@ export default function Home() {
 
     // Password
     const [m_pwd, setPwd] = useState<string>("");
+
+    useEffect(() => {
+        return () => { clearLoginData(); };
+    }, []);
 
     const router = useRouter();
 
@@ -77,9 +81,7 @@ export default function Home() {
                 <button
                     className="text-white bg-themeColor pt-2 pb-2 pl-5 pr-5 mt-5 font-bold rounded-md hover:scale-[1.02] hover:opacity-80 transition-all"
                     onClick={(e) => {
-                        pb.authStore.clear();
-                        deleteCookie('PB_AUTH_ID');
-                        deleteCookie('PB_AUTH_TOKEN');
+                        clearLoginData();
                     }}>
                     Clear
                 </button>
